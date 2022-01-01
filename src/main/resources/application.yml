@@ -15,7 +15,7 @@ spring:
     password:
   sql:
     init:
-      mode: embedded
+      mode: always
   h2:
     console:
       enabled: true
@@ -35,7 +35,7 @@ spring:
     password:
   sql:
     init:
-      mode: embedded
+      mode: always
   h2:
     console:
       enabled: true
