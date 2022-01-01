@@ -4,6 +4,6 @@ import com.playtomic.tests.wallet.api.dto.WalletDTO;
 
 public interface WalletService {
 
-    WalletDTO getWallet(long id);
+    WalletDTO getWallet(int id);
 
 }
