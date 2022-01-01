@@ -3,7 +3,9 @@ server:
   port: 8090
 ---
 spring:
-  profiles: develop
+  config:
+    activate:
+      on-profile: develop
   jpa:
     show_sql: false
     database: H2
@@ -14,7 +16,9 @@ stripe.simulator.charges-uri: https://sandbox.playtomic.io/v1/stripe-simulator/c
 stripe.simulator.refunds-uri: https://sandbox.playtomic.io/v1/stripe-simulator/payments/{payment_id}/refunds
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
   jpa:
     show_sql: false
     database: H2
