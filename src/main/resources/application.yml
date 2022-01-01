@@ -13,7 +13,9 @@ spring:
     url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;IGNORECASE=TRUE
     username: sa
     password:
-    initialize: false
+  sql:
+    init:
+      mode: embedded
   h2:
     console:
       enabled: true
@@ -31,7 +33,9 @@ spring:
     url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;IGNORECASE=TRUE
     username: sa
     password:
-    initialize: false
+  sql:
+    init:
+      mode: embedded
   h2:
     console:
       enabled: true
