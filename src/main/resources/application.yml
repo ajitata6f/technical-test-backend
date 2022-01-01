@@ -11,6 +11,8 @@ spring:
     database: H2
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;IGNORECASE=TRUE
+    username: sa
+    password:
     initialize: false
   h2:
     console:
@@ -27,6 +29,8 @@ spring:
     database: H2
   datasource:
     url: jdbc:h2:mem:testdb;DB_CLOSE_ON_EXIT=FALSE;IGNORECASE=TRUE
+    username: sa
+    password:
     initialize: false
   h2:
     console:
