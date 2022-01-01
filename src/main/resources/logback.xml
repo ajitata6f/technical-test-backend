@@ -1,7 +1,4 @@
 <configuration>
-    <property name="LOG_DIR" value="aaer-logs"/>
-    <property name="LOG_FILE" value="aaer-log"/>
-
     <!-- Create an appender for standard out -->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -9,11 +6,11 @@
         </encoder>
     </appender>
 
-    <logger name="com.confluencebits.aaerlaw" level="INFO" additivity="false">
+    <logger name="com.playtomic.tests.wallet.api" level="INFO" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
-    <logger name="com.confluencebits.aaerlaw" level="ERROR" additivity="false">
+    <logger name="com.playtomic.tests.wallet.api" level="ERROR" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
 
