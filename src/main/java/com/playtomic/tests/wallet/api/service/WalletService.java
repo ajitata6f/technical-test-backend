@@ -1,4 +1,4 @@
-package com.playtomic.tests.wallet.api.service.impl;
+package com.playtomic.tests.wallet.api.service;
 
 import com.playtomic.tests.wallet.api.dto.WalletDTO;
 
