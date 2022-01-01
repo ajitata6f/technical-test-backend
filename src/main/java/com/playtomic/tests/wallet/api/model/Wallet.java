@@ -12,12 +12,13 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Entity(name = "wallet")
+@Entity
+@Table(name = "wallet")
 public class Wallet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(name = "balance")
     private BigDecimal balance;
