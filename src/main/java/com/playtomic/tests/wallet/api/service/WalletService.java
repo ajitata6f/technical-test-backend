@@ -6,4 +6,6 @@ public interface WalletService {
 
     WalletDTO getWallet(int id);
 
+    void topUpWallet(WalletDTO walletDTO);
+
 }
