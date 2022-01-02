@@ -1,6 +1,7 @@
 package com.playtomic.tests.wallet.api.service.impl;
 
 import com.playtomic.tests.wallet.api.dto.WalletDTO;
+import com.playtomic.tests.wallet.api.exception.WalletNotFoundException;
 import com.playtomic.tests.wallet.api.model.Wallet;
 import com.playtomic.tests.wallet.api.repository.WalletRepository;
 import com.playtomic.tests.wallet.api.service.WalletService;
@@ -8,7 +9,7 @@ import com.playtomic.tests.wallet.service.StripeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.math.BigDecimal;
 
 @Service
 public class WalletServiceImpl implements WalletService {
@@ -25,14 +26,21 @@ public class WalletServiceImpl implements WalletService {
 
     @Override
     public WalletDTO getWallet(int id) {
-        Optional<Wallet> walletOptional = walletRepository.findById(id);
+        Wallet wallet = walletRepository.findById(id).orElseThrow(() -> new WalletNotFoundException(String.format("Sorry, no wallet was found with id %s", id)));
 
-        return modelMapper.map(walletOptional.get(), WalletDTO.class);
+        return modelMapper.map(wallet, WalletDTO.class);
     }
 
     @Override
-    public void topUpWallet(WalletDTO walletDTO) {
-        //stripeService.charge();
+    public WalletDTO topUpWallet(WalletDTO walletDTO) {
+        Wallet wallet = walletRepository.findById(walletDTO.getId()).orElseThrow(() -> new WalletNotFoundException(String.format("Sorry, no wallet was found with id %s", walletDTO.getId())));
+
+        stripeService.charge(walletDTO.getCreditCardNumber(), walletDTO.getTopUpAmount());
+
+        BigDecimal newBalance = wallet.getBalance().add(walletDTO.getTopUpAmount());
+        wallet.setBalance(newBalance);
+
+        return modelMapper.map(walletRepository.save(wallet), WalletDTO.class);
     }
 
 }
