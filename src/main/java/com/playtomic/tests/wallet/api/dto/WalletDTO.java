@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
@@ -16,7 +17,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class WalletDTO {
 
-    @NotNull(message = "{required.field}")
+    @NotNull(message = "Id may not be null")
     private Integer id;
 
     private BigDecimal balance;
@@ -26,8 +27,8 @@ public class WalletDTO {
     private BigDecimal topUpAmount;
 
     @JsonProperty("credit_card")
-    @Size(min = 14, max = 16, message ="Credit card number '${validatedValue}' must be at least {min} characters long. Length found : ${validatedValue.length()}")
-    @NotNull(message = "{required.field}")
+    @Size(min = 14, max = 16, message ="Invalid credit card number must ")
+    @NotBlank(message = "credit card number may not be blank")
     private String creditCardNumber;
 
 }
