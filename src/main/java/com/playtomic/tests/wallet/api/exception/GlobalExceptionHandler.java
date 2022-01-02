@@ -1,5 +1,7 @@
 package com.playtomic.tests.wallet.api.exception;
 
+import com.playtomic.tests.wallet.service.StripeAmountTooSmallException;
+import com.playtomic.tests.wallet.service.StripeServiceException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,6 +16,15 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler({StripeServiceException.class})
+    public ResponseEntity<ErrorResponse> handleStripeServiceException(StripeServiceException ex) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
+        errorResponse.setErrorMessage(ex instanceof StripeAmountTooSmallException ? "Top up amount too small" : "Error occurred while processing payment");
+
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).contentType(MediaType.APPLICATION_JSON).body(errorResponse);
+    }
 
     @ExceptionHandler({WalletNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(WalletNotFoundException ex) {
