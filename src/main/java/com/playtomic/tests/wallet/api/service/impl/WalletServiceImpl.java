@@ -27,12 +27,12 @@ public class WalletServiceImpl implements WalletService {
     public WalletDTO getWallet(int id) {
         Optional<Wallet> walletOptional = walletRepository.findById(id);
 
-        return modelMapper.map(walletOptional.get(), WalletDTO.class);;
+        return modelMapper.map(walletOptional.get(), WalletDTO.class);
     }
 
     @Override
     public void topUpWallet(WalletDTO walletDTO) {
-        stripeService.charge();
+        //stripeService.charge();
     }
 
 }
