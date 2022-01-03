@@ -22,14 +22,21 @@ public class WalletController {
         this.walletService = walletService;
     }
 
-    @GetMapping(value = "/{walletId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WalletDTO> getWallet(@PathVariable int walletId) {
-        return ResponseEntity.status(HttpStatus.OK).body(walletService.getWallet(walletId));
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<WalletDTO> getWallet(@PathVariable int id) {
+        return ResponseEntity.status(HttpStatus.OK).body(walletService.getWallet(id));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/top-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<WalletDTO> topUpWallet(@Valid @RequestBody WalletDTO walletDTO) {
         WalletDTO responseWalletDTO = walletService.topUpWallet(walletDTO);
+
+        return new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/refund", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<WalletDTO> refund(@Valid @RequestBody WalletDTO walletDTO) {
+        WalletDTO responseWalletDTO = walletService.refund(walletDTO);
 
         return new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
     }
