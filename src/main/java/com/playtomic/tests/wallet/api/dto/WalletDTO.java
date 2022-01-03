@@ -23,7 +23,7 @@ public class WalletDTO {
     private BigDecimal balance;
 
     @JsonProperty("top_up_amount")
-    @NotNull(message = "{required.field}")
+    @NotNull(message = "Top up amount may not be null")
     private BigDecimal topUpAmount;
 
     @JsonProperty("credit_card")
