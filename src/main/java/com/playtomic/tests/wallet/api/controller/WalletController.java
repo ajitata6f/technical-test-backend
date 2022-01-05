@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.concurrent.Callable;
 
 @RestController
 @RequestMapping("api/v1/wallets")
@@ -28,10 +29,10 @@ public class WalletController {
     }
 
     @PostMapping(value = "/top-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WalletDTO> topUpWallet(@Valid @RequestBody WalletDTO walletDTO) {
+    public Callable<ResponseEntity<WalletDTO>> topUpWallet(@Valid @RequestBody WalletDTO walletDTO) {
         WalletDTO responseWalletDTO = walletService.topUpWallet(walletDTO);
 
-        return new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
+        return () -> new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
     }
 
     @GetMapping("/")
