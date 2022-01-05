@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -35,7 +34,7 @@ public class WalletApplicationIT {
 
 	@Test
 	public void testGetWallet() throws Exception {
-		MockHttpServletResponse response = mockMvc
+		mockMvc
 				.perform(
 					MockMvcRequestBuilders
 							.get("http://localhost:8090/api/v1/wallets/1")
@@ -73,10 +72,6 @@ public class WalletApplicationIT {
 				.andExpect(jsonPath("$.balance").isNumber())
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse();
 
-	}
-
-	@Test
-	public void emptyTest() {
 	}
 
 }
