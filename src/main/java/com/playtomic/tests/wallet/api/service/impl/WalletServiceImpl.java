@@ -7,10 +7,12 @@ import com.playtomic.tests.wallet.api.repository.WalletRepository;
 import com.playtomic.tests.wallet.api.service.WalletService;
 import com.playtomic.tests.wallet.service.StripeService;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class WalletServiceImpl implements WalletService {
@@ -33,9 +35,10 @@ public class WalletServiceImpl implements WalletService {
         return modelMapper.map(wallet, WalletDTO.class);
     }
 
+    @Async
     @Transactional
     @Override
-    public WalletDTO topUpWallet(WalletDTO walletDTO) {
+    public CompletableFuture<WalletDTO> topUpWallet(WalletDTO walletDTO) {
         Wallet wallet = walletRepository.findById(walletDTO.getId()).orElseThrow(() -> new WalletNotFoundException(String.format("Sorry, no wallet was found with id %s", walletDTO.getId())));
 
         stripeService.charge(walletDTO.getCreditCardNumber(), walletDTO.getTopUpAmount());
@@ -43,7 +46,7 @@ public class WalletServiceImpl implements WalletService {
         BigDecimal newBalance = wallet.getBalance().add(walletDTO.getTopUpAmount());
         wallet.setBalance(newBalance);
 
-        return modelMapper.map(walletRepository.save(wallet), WalletDTO.class);
+        return CompletableFuture.completedFuture(modelMapper.map(walletRepository.save(wallet), WalletDTO.class));
     }
 
 }
