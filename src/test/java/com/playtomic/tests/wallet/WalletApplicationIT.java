@@ -11,13 +11,16 @@ import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -53,19 +56,24 @@ public class WalletApplicationIT {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		MockHttpServletResponse response = mockMvc
+		MvcResult mvcResult = mockMvc
 				.perform(
 						MockMvcRequestBuilders
 								.post("http://localhost:8090/api/v1/wallets/top-up")
 								.content(objectMapper.writeValueAsString(walletDTO))
 								.accept(MediaType.APPLICATION_JSON_VALUE)
 								.contentType(MediaType.APPLICATION_JSON_VALUE))
+				.andExpect(request().asyncStarted())
+				.andReturn();
+
+		mockMvc
+				.perform(asyncDispatch(mvcResult))
 				.andExpect(jsonPath("$.*", hasSize(2)))
 				.andExpect(jsonPath("$.id").isNumber())
 				.andExpect(jsonPath("$.balance").isNumber())
 				.andExpect(MockMvcResultMatchers.status().isOk()).andReturn().getResponse();
-	}
 
+	}
 
 	@Test
 	public void emptyTest() {
