@@ -30,9 +30,10 @@ public class WalletController {
 
     @PostMapping(value = "/top-up", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public Callable<ResponseEntity<WalletDTO>> topUpWallet(@Valid @RequestBody WalletDTO walletDTO) {
-        WalletDTO responseWalletDTO = walletService.topUpWallet(walletDTO);
-
-        return () -> new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
+        return () -> {
+            WalletDTO responseWalletDTO = walletService.topUpWallet(walletDTO);
+            return new ResponseEntity<>(responseWalletDTO, HttpStatus.OK);
+        };
     }
 
     @GetMapping("/")
