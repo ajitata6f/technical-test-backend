@@ -17,18 +17,18 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class WalletDTO {
 
-    @NotNull(message = "Id may not be null")
+    @NotNull(message = "Please enter a valid wallet id")
     private Integer id;
 
     private BigDecimal balance;
 
     @JsonProperty("top_up_amount")
-    @NotNull(message = "Top up amount may not be null")
+    @NotNull(message = "Please enter the amount you wish to credit into your wallet")
     private BigDecimal topUpAmount;
 
     @JsonProperty("credit_card")
     @Size(min = 14, max = 16, message ="Invalid credit card number")
-    @NotBlank(message = "credit card number may not be blank")
+    @NotBlank(message = "Please enter your credit card number")
     private String creditCardNumber;
 
 }
