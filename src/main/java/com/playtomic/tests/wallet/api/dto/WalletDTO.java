@@ -27,7 +27,7 @@ public class WalletDTO {
     private BigDecimal topUpAmount;
 
     @JsonProperty("credit_card")
-    @Size(min = 14, max = 16, message ="Invalid credit card number must ")
+    @Size(min = 14, max = 16, message ="Invalid credit card number")
     @NotBlank(message = "credit card number may not be blank")
     private String creditCardNumber;
 
