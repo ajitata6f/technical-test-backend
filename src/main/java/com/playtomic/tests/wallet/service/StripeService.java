@@ -23,13 +23,13 @@ import java.net.URI;
 public class StripeService {
 
     @NonNull
-    private URI chargesUri;
+    private final URI chargesUri;
 
     @NonNull
-    private URI refundsUri;
+    private final URI refundsUri;
 
     @NonNull
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     public StripeService(@Value("${stripe.simulator.charges-uri}") @NonNull URI chargesUri,
                          @Value("${stripe.simulator.refunds-uri}") @NonNull URI refundsUri,
