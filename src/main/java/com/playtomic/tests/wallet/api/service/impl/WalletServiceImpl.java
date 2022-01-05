@@ -8,6 +8,7 @@ import com.playtomic.tests.wallet.api.service.WalletService;
 import com.playtomic.tests.wallet.service.StripeService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -24,6 +25,7 @@ public class WalletServiceImpl implements WalletService {
         this.walletRepository = walletRepository;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public WalletDTO getWallet(int id) {
         Wallet wallet = walletRepository.findById(id).orElseThrow(() -> new WalletNotFoundException(String.format("Sorry, no wallet was found with id %s", id)));
@@ -31,6 +33,7 @@ public class WalletServiceImpl implements WalletService {
         return modelMapper.map(wallet, WalletDTO.class);
     }
 
+    @Transactional
     @Override
     public WalletDTO topUpWallet(WalletDTO walletDTO) {
         Wallet wallet = walletRepository.findById(walletDTO.getId()).orElseThrow(() -> new WalletNotFoundException(String.format("Sorry, no wallet was found with id %s", walletDTO.getId())));
