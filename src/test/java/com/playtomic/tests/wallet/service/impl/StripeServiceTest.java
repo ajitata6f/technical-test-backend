@@ -17,9 +17,8 @@ import java.net.URI;
  */
 public class StripeServiceTest {
 
-    //URI testUri = URI.create("http://how-would-you-test-me.localhost");
-    URI testUri = URI.create("https://sandbox.playtomic.io/v1/stripe-simulator/charges");
-    StripeService s = new StripeService(testUri, testUri, new RestTemplateBuilder());
+    private final URI testUri = URI.create("https://sandbox.playtomic.io/v1/stripe-simulator/charges");
+    private final StripeService s = new StripeService(testUri, testUri, new RestTemplateBuilder());
 
     @Test
     public void test_exception() {
